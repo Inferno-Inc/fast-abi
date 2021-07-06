@@ -1,22 +1,21 @@
 {
-    "name": "fast-abi",
+    "name": "@uniswap/sfast-abi",
     "version": "0.0.3",
     "description": "",
     "main": "lib/index.js",
-    "author": "Jacob Evans <jacob@dekz.net>",
-    "license": "MIT",
     "dependencies": {
         "@mapbox/node-pre-gyp": "^1.0.4",
+        "ethers": "^5.4.0",
         "neon-cli": "^0.8.0",
         "uuid": "^8.3.2"
     },
     "scripts": {
-        "build": "tsc -b && neon build --release",
+        "build": "tsc -b && neon build --release && mv ./native/index.node build-native/index.node",
         "build:ts": "tsc -b",
         "build:rs": "neon build",
         "watch": "tsc -w -p tsconfig.json",
         "install": "node-pre-gyp install --fallback-to-build=false || neon build --release",
-        "package": "node-pre-gyp package",
+        "package": "./package-binaries.sh",
         "upload-binary": "node-pre-gyp package && node-pre-gyp-github publish"
     },
     "devDependencies": {
@@ -33,17 +32,17 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/0xProject/fast-abi.git"
+        "url": "git+https://github.com/Uniswap/fast-abi.git"
     },
     "files": [
         "lib"
     ],
     "binary": {
         "module_name": "index",
-        "host": "https://github.com/0xProject/fast-abi/releases/download/",
+        "host": "https://github.com/Uniswap/fast-abi/releases/download/",
         "remote_path": "{version}",
         "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
-        "module_path": "./native",
+        "module_path": "./build-native",
         "pkg_path": "."
     }
 }
